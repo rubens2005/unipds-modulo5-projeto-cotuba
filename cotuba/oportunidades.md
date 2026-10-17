@@ -24,3 +24,16 @@
 
 
 - No processo de geração criar um template method que contém o algoritmo gerar de geração de arquivos, delegando para as classes específicos os método especializados de acordo com o tipo do arquivo a ser gerado.
+
+# Problemas apontados pelos professores
+
+A classe Main tem quase 300 linhas e sabe fazer absolutamente tudo:
+ 
+- faz parse de argumentos de linha de comando, 
+- trabalha com arquivos e diretórios, 
+- converte arquivos .md para HTML, 
+- gera ebooks.
+
+## Tarefa
+
+- 
