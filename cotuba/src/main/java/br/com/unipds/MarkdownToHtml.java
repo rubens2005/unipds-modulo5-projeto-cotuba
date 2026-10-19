@@ -29,7 +29,6 @@ public class MarkdownToHtml {
               "Não foram encontrados capítulos (arquivos .md) no diretório: " + diretorioDosMD.toAbsolutePath());
         }
         arquivosMD.forEach(arquivoMD -> {
-          System.out.println("Arquivo MD [%s]".formatted(arquivoMD));
           Capitulo capitulo = ebook.novoCapitulo();
           capitulo.setArquivoMD(arquivoMD);
           Parser parser = Parser.builder().build();
