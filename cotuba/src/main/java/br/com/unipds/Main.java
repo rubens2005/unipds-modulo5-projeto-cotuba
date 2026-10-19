@@ -1,22 +1,14 @@
 package br.com.unipds;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Heading;
@@ -54,93 +46,47 @@ public class Main {
 
   int executar(String[] args) {
     // Definição e validação dos argumentos da linha de comando
-    var options = new Options();
-
-    var opcaoDeDiretorioDosMD = new Option("d", "dir", true,
-        "Diretório que contém os arquivos md. Default: diretório atual.");
-    options.addOption(opcaoDeDiretorioDosMD);
-
-    var opcaoDeFormatoDoEbook = new Option("f", "format", true,
-        "Formato de saída do ebook. Pode ser: pdf ou epub. Default: pdf");
-    options.addOption(opcaoDeFormatoDoEbook);
-
-    var opcaoDeArquivoDeSaida = new Option("o", "output", true, "Arquivo de saída do ebook. Default: book.{formato}.");
-    options.addOption(opcaoDeArquivoDeSaida);
-
-    var opcaoModoVerboso = new Option("v", "verbose", false, "Habilita modo verboso.");
-    options.addOption(opcaoModoVerboso);
-
-    CommandLineParser cmdParser = new DefaultParser();
+    CliArgs cliArgs = new CliArgs();
     var ajuda = new HelpFormatter();
-    CommandLine cmd;
-
+    boolean modoVerboso = true;
     try {
-      cmd = cmdParser.parse(options, args);
+      cliArgs.parse(args);
     } catch (ParseException e) {
       System.err.println(e.getMessage());
-      ajuda.printHelp("cotuba", options);
+      ajuda.printHelp("cotuba", cliArgs.getOptions());
+      return 1;
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
+      if (modoVerboso) {
+        System.err.println();
+        e.printStackTrace();
+      }
+      return 1;
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+      if (modoVerboso) {
+        System.err.println();
+        e.printStackTrace();
+      }
       return 1;
     }
 
     // Extração e utilização dos argumentos da linha de comando.
-    Path diretorioDosMD;
-    String formato;
-    Path arquivoDeSaida;
-    boolean modoVerboso = false;
+    Path diretorioDosMD = cliArgs.getDiretorioDosMD();
+    FormatoEbook formato = cliArgs.getFormato();
+    Path arquivoDeSaida = cliArgs.getArquivoDeSaida();
+    modoVerboso = cliArgs.isModoVerboso();
 
     try {
-
-      String nomeDoDiretorioDosMD = cmd.getOptionValue("dir");
-
-      if (nomeDoDiretorioDosMD != null) {
-        diretorioDosMD = Paths.get(nomeDoDiretorioDosMD);
-        if (!Files.isDirectory(diretorioDosMD)) {
-          throw new IllegalArgumentException(nomeDoDiretorioDosMD + " não é um diretório.");
-        }
-      } else {
-        Path diretorioAtual = Paths.get("");
-        diretorioDosMD = diretorioAtual;
-      }
-
-      String nomeDoFormatoDoEbook = cmd.getOptionValue("format");
-
-      if (nomeDoFormatoDoEbook != null) {
-        formato = nomeDoFormatoDoEbook.toLowerCase();
-      } else {
-        formato = "pdf";
-      }
-
-      String nomeDoArquivoDeSaidaDoEbook = cmd.getOptionValue("output");
-      if (nomeDoArquivoDeSaidaDoEbook != null) {
-        arquivoDeSaida = Paths.get(nomeDoArquivoDeSaidaDoEbook);
-      } else {
-        arquivoDeSaida = Paths.get("book." + formato.toLowerCase());
-      }
-      if (Files.isDirectory(arquivoDeSaida)) {
-        // deleta arquivos do diretório recursivamente
-        Files //
-            .walk(arquivoDeSaida) //
-            .sorted(Comparator.reverseOrder()) //
-            .map(Path::toFile). //
-            forEach(File::delete);
-      } else {
-        Files.deleteIfExists(arquivoDeSaida);
-      }
-
-      modoVerboso = cmd.hasOption("verbose");
-
-      if ("pdf".equals(formato)) {
+      if (FormatoEbook.PDF.equals(formato)) {
         gerarPDF(diretorioDosMD, arquivoDeSaida);
-
-      } else if ("epub".equals(formato)) {
+      } else if (FormatoEbook.EPUB.equals(formato)) {
         gerarEpub(diretorioDosMD, arquivoDeSaida);
       } else {
         throw new IllegalArgumentException("Formato do ebook inválido: " + formato);
       }
-
       System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
       return 0;
-
     } catch (Exception ex) {
       System.err.println(ex.getMessage());
       if (modoVerboso) {

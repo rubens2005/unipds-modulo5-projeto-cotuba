@@ -1,6 +1,6 @@
 package br.com.unipds;
 
-public enum FormatoArquivo {
+public enum FormatoEbook {
 
   PDF,
 
