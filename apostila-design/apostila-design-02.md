@@ -1,4 +1,4 @@
-# Software Design & System Design: 2 - Princípios Básicos de System Design
+# 2 - Princípios Básicos de System Design
 
 ## 1. Dados sobre a Aula
 

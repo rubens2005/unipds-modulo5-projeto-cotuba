@@ -1,4 +1,4 @@
-# Software Design & System Design: 6 - Exemplos e Visão de Geral de Cases de System Design
+# 6 - Exemplos e Visão de Geral de Cases de System Design
 
 ## 1. Dados sobre a Aula
 

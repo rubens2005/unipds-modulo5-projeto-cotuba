@@ -62,7 +62,7 @@ public class CliArgs {
       try {
         formato = FormatoEbook.valueOf(nomeDoFormatoDoEbook.toUpperCase());
       } catch (IllegalArgumentException e) {
-        throw new IllegalArgumentException("Formato do ebook inválido: " + nomeDoFormatoDoEbook.toLowerCase());
+        throw new IllegalArgumentException("Formato do ebook inválido: " + nomeDoFormatoDoEbook.toLowerCase(), e);
       }
     } else {
       formato = FormatoEbook.PDF;

@@ -1,4 +1,4 @@
-# Software Design & System Design: 10 - Design Patterns - Visão Prática
+# 10 - Design Patterns - Visão Prática
 
 ## 1. Dados sobre a Aula
 

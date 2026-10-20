@@ -36,8 +36,8 @@ public class ApplicationService {
     }
 
     Ebook ebook = new Ebook(cliArgs);
-    ebook.setTitulo("Cade o título?");
-    ebook.setAutor("Cade o autor?");
+    LeitorPropriedadesEbook propriedades = new LeitorPropriedadesEbook();
+    propriedades.ler(ebook);
 
     // Extração e utilização dos argumentos da linha de comando.
     FormatoEbook formato = ebook.getFormato();
@@ -45,15 +45,15 @@ public class ApplicationService {
     modoVerboso = ebook.isModoVerboso();
 
     try {
-      MarkdownToHtml markdownToHtml = new MarkdownToHtml();
-      markdownToHtml.converter(ebook);
+      RenderizadorMarkdown markdownToHtml = new RenderizadorMarkdown();
+      markdownToHtml.renderizar(ebook);
+
       if (FormatoEbook.PDF.equals(formato)) {
         new GeradorDePdf().gerar(ebook);
       } else if (FormatoEbook.EPUB.equals(formato)) {
         new GeradorDeEpub().gerar(ebook);
-      } else {
-        throw new IllegalArgumentException("Formato do ebook inválido: " + formato);
       }
+
       System.out.println("Arquivo gerado com sucesso: " + arquivoDeSaida);
       return 0;
     } catch (Exception ex) {

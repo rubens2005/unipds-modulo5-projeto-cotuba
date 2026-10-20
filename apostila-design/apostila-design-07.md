@@ -1,4 +1,4 @@
-# Software Design & System Design: 7 - Visão Geral de Práticas de Código
+# 7 - Visão Geral de Práticas de Código
 
 ## 1. Dados sobre a Aula
 

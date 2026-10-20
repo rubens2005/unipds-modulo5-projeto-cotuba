@@ -1,4 +1,4 @@
-# Software Design & System Design: 9 - Design Patterns
+# 9 - Design Patterns
 
 ## 1. Dados sobre a Aula
 

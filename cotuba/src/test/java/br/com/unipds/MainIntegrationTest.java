@@ -37,6 +37,10 @@ class MainIntegrationTest {
     System.setErr(new PrintStream(errContent));
 
     // Cria o arquivo de teste
+
+    Path arquivoPropriedades = diretorioDosMd.resolve("ebook.properties");
+    Files.writeString(arquivoPropriedades, "cotuba.ebook.titulo=Título\ncotuba.ebook.autor=Autor dos Santos");
+
     arquivoMd = diretorioDosMd.resolve("01-introducao.md");
     Files.writeString(arquivoMd, "# Capítulo Teste\n\nEste é um conteúdo de um arquivo Markdown.");
   }

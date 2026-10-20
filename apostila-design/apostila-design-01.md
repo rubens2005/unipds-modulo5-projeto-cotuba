@@ -1,4 +1,4 @@
-# Software Design & System Design: 1 - Introdução
+# 1 - Introdução
 
 ## 1. Dados sobre a Aula
 

@@ -1,4 +1,4 @@
-# Software Design & System Design: 12 - Conhecendo o JMolecules
+# 12 - Conhecendo o JMolecules
 
 ## 1. Dados sobre a Aula
 

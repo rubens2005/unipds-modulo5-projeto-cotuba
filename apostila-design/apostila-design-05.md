@@ -1,4 +1,4 @@
-# Software Design & System Design: 5 - Comunicação entre Componentes (System Design)
+# 5 - Comunicação entre Componentes (System Design)
 
 ## 1. Dados sobre a Aula
 

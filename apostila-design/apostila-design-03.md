@@ -1,4 +1,4 @@
-# Software Design & System Design: 3 - System Design e Documentação
+# 3 - System Design e Documentação
 
 ## 1. Dados sobre a Aula
 

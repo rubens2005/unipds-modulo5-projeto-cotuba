@@ -26,7 +26,11 @@ public class GeradorDePdf {
       pdf.getDocumentInfo().setTitle(ebook.getTitulo());
       pdf.getDocumentInfo().setAuthor(ebook.getAutor());
 
-      for (Capitulo capitulo : ebook.getCapitulos()) {
+      List<Capitulo> capitulos = ebook.getCapitulos();
+      int n = capitulos.size();
+      int ultimoI = n - 1;
+      for (int i = 0; i < n; i++) {
+        Capitulo capitulo = capitulos.get(i);
         String html = capitulo.getHtml();
         List<IElement> convertToElements = HtmlConverter.convertToElements(html);
         if (pdf.getNumberOfPages() == 0) {
@@ -42,8 +46,9 @@ public class GeradorDePdf {
         for (IElement element : convertToElements) {
           pdfDocument.add((IBlockElement) element);
         }
-        // TODO: não adicionar página depois do último capítulo
-        pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+        if (i < ultimoI) {
+          pdfDocument.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+        }
       }
     } catch (Exception ex) {
       throw new IllegalStateException("Erro ao gerar PDF: " + arquivoDeSaida.toAbsolutePath(), ex);

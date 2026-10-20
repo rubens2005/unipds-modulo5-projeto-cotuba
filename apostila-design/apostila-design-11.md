@@ -1,4 +1,4 @@
-# Software Design & System Design: 11 - Visão Geral Sobre DDD
+# 11 - Visão Geral Sobre DDD
 
 ## 1. Dados sobre a Aula
 

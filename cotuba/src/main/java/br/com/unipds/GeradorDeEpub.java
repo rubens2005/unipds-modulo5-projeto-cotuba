@@ -27,7 +27,7 @@ public class GeradorDeEpub {
         String epubHtml = """
               <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
-                  <title>TTTTTitulo</title>
+                  <title>TTTTTitulooooooooo</title>
                 </head>
                 <body>
                   %s
@@ -36,7 +36,6 @@ public class GeradorDeEpub {
             """.formatted(html);
         var chapter = new Resource(epubHtml.getBytes(), MediatypeService.XHTML);
         epub.addSection(capitulo.getTitulo(), chapter);
-
         if (ehPrimeiroCapitulo[0]) {
           epub.getGuide().addReference(new GuideReference(chapter, "text", "Start Reading"));
           ehPrimeiroCapitulo[0] = false;

@@ -11,16 +11,16 @@ import org.commonmark.node.Text;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
-public class MarkdownToHtml {
+public class RenderizadorMarkdown {
 
-  private final MarkdownRepository markdownRepository;
+  private final RepositorioMarkdown markdownRepository;
 
-  public MarkdownToHtml() {
+  public RenderizadorMarkdown() {
     super();
-    markdownRepository = new MarkdownRepository();
+    markdownRepository = new RepositorioMarkdown();
   }
 
-  public void converter(Ebook ebook) {
+  public void renderizar(Ebook ebook) {
     List<Path> arquivosMD = markdownRepository.listarArquivos(ebook.getDiretorioDosMD());
     arquivosMD.forEach(arquivoMD -> {
       Capitulo capitulo = ebook.novoCapitulo();
@@ -28,8 +28,9 @@ public class MarkdownToHtml {
       Parser parser = Parser.builder().build();
       Node document = null;
       try {
-        capitulo.setMarkdown(Files.readString(arquivoMD));
-        document = parser.parseReader(Files.newBufferedReader(arquivoMD));
+        String markdown = Files.readString(arquivoMD);
+        capitulo.setMarkdown(markdown);
+        document = parser.parse(markdown);
         document.accept(new AbstractVisitor() {
           @Override
           public void visit(Heading heading) {

@@ -1,4 +1,4 @@
-# Software Design & System Design: 4 - Introdução a Banco de Dados na Perspectiva de System Design
+# 4 - Introdução a Banco de Dados na Perspectiva de System Design
 
 ## 1. Dados sobre a Aula
 
